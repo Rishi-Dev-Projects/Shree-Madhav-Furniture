@@ -17,14 +17,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <!-- ============ NAVBAR ============ -->
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#home" class="nav-logo">
-                <img src="images/logo.png" alt="Shree Madhav Furniture Logo" class="logo-icon">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Shree Madhav Furniture Logo" class="logo-icon">
                 <div class="logo-text">
                     <span class="logo-name">Shree Madhav</span>
                     <span class="logo-sub">Furniture</span>
@@ -131,10 +131,10 @@
             <div class="about-grid">
                 <div class="about-images">
                     <div class="about-img-main">
-                        <img src="images/modern_workshop.png" alt="Shree Madhav Furniture Modern Workshop" loading="lazy">
+                        <img src="{{ url_for('static', filename='images/modern_workshop.png') }}" alt="Shree Madhav Furniture Modern Workshop" loading="lazy">
                     </div>
                     <div class="about-img-secondary">
-                        <img src="images/worker_machine.png" alt="Worker making furniture using machines" loading="lazy">
+                        <img src="{{ url_for('static', filename='images/worker_machine.png') }}" alt="Worker making furniture using machines" loading="lazy">
                     </div>
                     <div class="about-experience-badge">
                         <span class="exp-number">10+</span>
@@ -183,28 +183,28 @@
             </div>
             <div class="category-grid">
                 <a href="#products" class="category-card" data-filter="bed">
-                    <img src="images/bed.png" alt="Beds" loading="lazy">
+                    <img src="{{ url_for('static', filename='images/bed.png') }}" alt="Beds" loading="lazy">
                     <div class="category-content">
                         <h3>Beds</h3>
                         <span>View Collection &rarr;</span>
                     </div>
                 </a>
                 <a href="#products" class="category-card" data-filter="tv-unit">
-                    <img src="images/box-tv-unit.jpg" alt="TV Units" loading="lazy">
+                    <img src="{{ url_for('static', filename='images/box-tv-unit.jpg') }}" alt="TV Units" loading="lazy">
                     <div class="category-content">
                         <h3>TV Units</h3>
                         <span>View Collection &rarr;</span>
                     </div>
                 </a>
                 <a href="#products" class="category-card" data-filter="cupboard">
-                    <img src="images/cupboard.png" alt="Cupboards" loading="lazy">
+                    <img src="{{ url_for('static', filename='images/cupboard.png') }}" alt="Cupboards" loading="lazy">
                     <div class="category-content">
                         <h3>Cupboards</h3>
                         <span>View Collection &rarr;</span>
                     </div>
                 </a>
                 <a href="#products" class="category-card" data-filter="sofa">
-                    <img src="images/sofa.png" alt="Sofas" loading="lazy">
+                    <img src="{{ url_for('static', filename='images/sofa.png') }}" alt="Sofas" loading="lazy">
                     <div class="category-content">
                         <h3>Sofa Sets</h3>
                         <span>View Collection &rarr;</span>
@@ -234,166 +234,22 @@
 
             <!-- Product Grid -->
             <div class="product-grid" id="productGrid">
-                <!-- Box TV Unit -->
-                <div class="product-card" data-category="tv-unit">
-                    <a href="products/box-tv-unit.html" style="text-decoration:none;color:inherit;">
+                {% for product in products %}
+                <div class="product-card" data-category="{{ product.category }}">
+                    <a href="{{ url_for('product_detail', slug=product.slug) }}" style="text-decoration:none;color:inherit;">
                         <div class="product-image">
-                            <img src="images/box-tv-unit.jpg" alt="Box TV Unit" loading="lazy">
-                            <span class="product-badge">New Arrival</span>
+                            <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}" loading="lazy">
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name">Box TV Unit</h3>
-                            <p class="product-desc">Elegant wall-mounted TV unit with LED backlight panel, display shelves, glass cabinet, and spacious storage drawers. Premium wood finish crafted for modern living rooms.</p>
+                            <h3 class="product-name">{{ product.name }}</h3>
                             <div class="product-footer">
-                                <span class="product-price">Starting ₹25,000</span>
+                                <span class="product-price">{{ product.price }}</span>
                                 <span class="product-enquiry">View Details →</span>
                             </div>
                         </div>
                     </a>
                 </div>
-
-                <!-- Slatted Wood TV Unit -->
-                <div class="product-card" data-category="tv-unit">
-                    <a href="products/slatted-wood-tv-unit.html" style="text-decoration:none;color:inherit;">
-                        <div class="product-image">
-                            <img src="images/slatted-wood-tv-unit.jpg" alt="Slatted Wood TV Unit" loading="lazy">
-                            <span class="product-badge">New Arrival</span>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Slatted Wood TV Unit</h3>
-                            <p class="product-desc">Stunning wooden slatted panel TV unit with warm LED backlighting, open display shelves, and spacious base cabinet storage. Crafted in premium natural wood finish.</p>
-                            <div class="product-footer">
-                                <span class="product-price">Starting ₹22,000</span>
-                                <span class="product-enquiry">View Details →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Geometric Motif 4-Door Wardrobe -->
-                <div class="product-card" data-category="cupboard">
-                    <a href="products/geometric-motif-wardrobe.html" style="text-decoration:none;color:inherit;">
-                        <div class="product-image">
-                            <img src="images/geometric-motif-wardrobe.png" alt="Geometric Motif 4-Door Wardrobe" loading="lazy">
-                            <span class="product-badge">New Arrival</span>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Geometric Motif 4-Door Wardrobe</h3>
-                            <p class="product-desc">A grand 4-door wardrobe crafted in rich dark mahogany wood grain featuring stunning geometric diamond motifs, a tall mirror, and drawers.</p>
-                            <div class="product-footer">
-                                <span class="product-price">Starting ₹32,000</span>
-                                <span class="product-enquiry">View Details →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Wood & Grey 3-Door Wardrobe -->
-                <div class="product-card" data-category="cupboard">
-                    <a href="products/wood-grey-wardrobe.html" style="text-decoration:none;color:inherit;">
-                        <div class="product-image">
-                            <img src="images/wood-grey-wardrobe.png" alt="Wood & Grey 3-Door Wardrobe" loading="lazy">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Wood & Grey 3-Door Wardrobe</h3>
-                            <p class="product-desc">A modern 3-door wardrobe featuring natural wood grain slatted panels and a sleek matte grey center door with a full-length mirror.</p>
-                            <div class="product-footer">
-                                <span class="product-price">Starting ₹22,000</span>
-                                <span class="product-enquiry">View Details →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Matte Black & Wood Geometric Bed Combo -->
-                <div class="product-card" data-category="bed cupboard">
-                    <a href="products/black-wood-bed-combo.html" style="text-decoration:none;color:inherit;">
-                        <div class="product-image">
-                            <img src="images/black-wood-bed-combo.png" alt="Matte Black & Wood Geometric Bed Combo" loading="lazy">
-                            <span class="product-badge">New Arrival</span>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Matte Black & Wood Geometric Bed Combo</h3>
-                            <p class="product-desc">A highly modern bedroom set that perfectly balances striking matte black panels with beautiful light oak wood grain. Features a geometrically designed headboard and matching wardrobe.</p>
-                            <div class="product-footer">
-                                <span class="product-price">Starting ₹37,000</span>
-                                <span class="product-enquiry">View Details →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Dual-Tone Wooden Bed Combo -->
-                <div class="product-card" data-category="bed cupboard">
-                    <a href="products/dual-tone-bed-combo.html" style="text-decoration:none;color:inherit;">
-                        <div class="product-image">
-                            <img src="images/dual-tone-bed-combo.png" alt="Dual-Tone Wooden Bed Combo" loading="lazy">
-                            <span class="product-badge">New Arrival</span>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Dual-Tone Wooden Bed Combo</h3>
-                            <p class="product-desc">A stunning bedroom set featuring a striking two-tone high-contrast wood finish. Includes a uniquely designed bed and a matching 3-door wardrobe.</p>
-                            <div class="product-footer">
-                                <span class="product-price">Starting ₹36,000</span>
-                                <span class="product-enquiry">View Details →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Mint Green Bed and Wardrobe Combo -->
-                <div class="product-card" data-category="bed cupboard">
-                    <a href="products/mint-bed-combo.html" style="text-decoration:none;color:inherit;">
-                        <div class="product-image">
-                            <img src="images/mint-bed-combo.png" alt="Mint Green Bed and Wardrobe Combo" loading="lazy">
-                            <span class="product-badge">New Arrival</span>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Mint Green Bed & Wardrobe</h3>
-                            <p class="product-desc">A stunning modern bedroom set in soft mint green featuring a double bed with a plush cream tufted headboard and a matching 3-door wardrobe with a central mirror.</p>
-                            <div class="product-footer">
-                                <span class="product-price">Starting ₹38,000</span>
-                                <span class="product-enquiry">View Details →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Diamond Tufted Bed -->
-                <div class="product-card" data-category="bed">
-                    <a href="products/diamond-tufted-bed.html" style="text-decoration:none;color:inherit;">
-                        <div class="product-image">
-                            <img src="images/diamond-tufted-bed.png" alt="Diamond Tufted Bed" loading="lazy">
-                            <span class="product-badge">Popular</span>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Diamond Tufted Bed</h3>
-                            <p class="product-desc">Elegant double bed with stunning walnut and cream two-tone finish. Features diamond motif headboard and footboard panels with horizontal slat detailing. Built with durable wood for lasting comfort.</p>
-                            <div class="product-footer">
-                                <span class="product-price">Starting ₹18,000</span>
-                                <span class="product-enquiry">View Details →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Square Bed and Cupboard -->
-                <div class="product-card" data-category="bed cupboard">
-                    <a href="products/square-bed-cupboard.html" style="text-decoration:none;color:inherit;">
-                        <div class="product-image">
-                            <img src="images/square-bed-cupboard.png" alt="Square Bed and Cupboard" loading="lazy">
-                            <span class="product-badge">Combo Set</span>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Square Bed and Cupboard</h3>
-                            <p class="product-desc">Complete bedroom set with matching bed and 2-door mirror wardrobe. Cream and walnut two-tone finish with elegant diamond motif panels. A perfect coordinated set for your bedroom.</p>
-                            <div class="product-footer">
-                                <span class="product-price">Starting ₹35,000</span>
-                                <span class="product-enquiry">View Details →</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                {% endfor %}
             </div>
 
             <div class="products-cta">
@@ -603,7 +459,7 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="#home" class="nav-logo">
-                        <img src="images/logo.png" alt="Shree Madhav Furniture Logo" class="logo-icon">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Shree Madhav Furniture Logo" class="logo-icon">
                         <div class="logo-text">
                             <span class="logo-name">Shree Madhav</span>
                             <span class="logo-sub">Furniture</span>
@@ -658,6 +514,7 @@
         ↑
     </button>
 
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+

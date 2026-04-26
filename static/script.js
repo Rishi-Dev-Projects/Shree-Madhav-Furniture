@@ -258,3 +258,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+// WhatsApp Tracking
+document.querySelectorAll('.whatsapp-track, .nav-whatsapp, .btn-whatsapp, .whatsapp-float').forEach(btn => {
+    btn.addEventListener('click', () => {
+        fetch('/api/track-whatsapp', { method: 'POST' }).catch(console.error);
+    });
+});
