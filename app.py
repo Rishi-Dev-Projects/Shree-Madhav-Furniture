@@ -50,37 +50,51 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+import time
+
+PRODUCT_CACHE = {'data': None, 'time': 0}
+CACHE_TTL = 300 # 5 minutes
+
 @app.route('/')
 def index():
-    # Increment page view
+    global PRODUCT_CACHE
+    products_list = []
+    
+    # Use cached products if available and fresh
+    if PRODUCT_CACHE['data'] is not None and (time.time() - PRODUCT_CACHE['time'] < CACHE_TTL):
+        products_list = PRODUCT_CACHE['data']
+    else:
+        try:
+            with get_db_connection() as conn:
+                with conn.cursor() as cur:
+                    # Fetch products for the grid
+                    cur.execute("SELECT id, name, slug, category, price, image_url FROM products ORDER BY created_at DESC;")
+                    products = cur.fetchall()
+                    
+                    for p in products:
+                        products_list.append({
+                            'id': p[0], 'name': p[1], 'slug': p[2],
+                            'category': p[3], 'price': p[4], 'image_url': p[5]
+                        })
+            PRODUCT_CACHE['data'] = products_list
+            PRODUCT_CACHE['time'] = time.time()
+        except Exception as e:
+            print("DB Error:", e)
+
+    return render_template('index.html', products=products_list)
+
+@app.route('/api/track-pageview', methods=['POST'])
+def track_pageview():
     try:
         with get_db_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute("UPDATE analytics SET page_views = page_views + 1 WHERE date = CURRENT_DATE;")
                 if cur.rowcount == 0:
                     cur.execute("INSERT INTO analytics (date, page_views, whatsapp_clicks) VALUES (CURRENT_DATE, 1, 0);")
-                
-                # Fetch products for the grid
-                cur.execute("SELECT id, name, slug, category, price, image_url FROM products ORDER BY created_at DESC;")
-                products = cur.fetchall()
-                
-                # Convert to list of dicts for easier template rendering
-                products_list = []
-                for p in products:
-                    products_list.append({
-                        'id': p[0],
-                        'name': p[1],
-                        'slug': p[2],
-                        'category': p[3],
-                        'price': p[4],
-                        'image_url': p[5]
-                    })
                 conn.commit()
     except Exception as e:
-        print("DB Error:", e)
-        products_list = []
-
-    return render_template('index.html', products=products_list)
+        print(e)
+    return jsonify({"status": "success"})
 
 
 @app.route('/products/<slug>')

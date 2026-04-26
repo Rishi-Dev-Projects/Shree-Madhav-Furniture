@@ -16,6 +16,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Preload LCP Image -->
+    <link rel="preload" as="image" href="{{ url_for('static', filename='images/hero.png') }}">
+    
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
@@ -131,10 +134,10 @@
             <div class="about-grid">
                 <div class="about-images">
                     <div class="about-img-main">
-                        <img src="{{ url_for('static', filename='images/modern_workshop.png') }}" alt="Shree Madhav Furniture Modern Workshop" loading="lazy">
+                        <img src="{{ url_for('static', filename='images/modern_workshop.png') }}" alt="Shree Madhav Furniture Modern Workshop" loading="lazy" decoding="async">
                     </div>
                     <div class="about-img-secondary">
-                        <img src="{{ url_for('static', filename='images/worker_machine.png') }}" alt="Worker making furniture using machines" loading="lazy">
+                        <img src="{{ url_for('static', filename='images/worker_machine.png') }}" alt="Worker making furniture using machines" loading="lazy" decoding="async">
                     </div>
                     <div class="about-experience-badge">
                         <span class="exp-number">10+</span>
@@ -183,28 +186,28 @@
             </div>
             <div class="category-grid">
                 <a href="#products" class="category-card" data-filter="bed">
-                    <img src="{{ url_for('static', filename='images/bed.png') }}" alt="Beds" loading="lazy">
+                    <img src="{{ url_for('static', filename='images/bed.png') }}" alt="Beds" loading="lazy" decoding="async">
                     <div class="category-content">
                         <h3>Beds</h3>
                         <span>View Collection &rarr;</span>
                     </div>
                 </a>
                 <a href="#products" class="category-card" data-filter="tv-unit">
-                    <img src="{{ url_for('static', filename='images/box-tv-unit.jpg') }}" alt="TV Units" loading="lazy">
+                    <img src="{{ url_for('static', filename='images/box-tv-unit.jpg') }}" alt="TV Units" loading="lazy" decoding="async">
                     <div class="category-content">
                         <h3>TV Units</h3>
                         <span>View Collection &rarr;</span>
                     </div>
                 </a>
                 <a href="#products" class="category-card" data-filter="cupboard">
-                    <img src="{{ url_for('static', filename='images/cupboard.png') }}" alt="Cupboards" loading="lazy">
+                    <img src="{{ url_for('static', filename='images/cupboard.png') }}" alt="Cupboards" loading="lazy" decoding="async">
                     <div class="category-content">
                         <h3>Cupboards</h3>
                         <span>View Collection &rarr;</span>
                     </div>
                 </a>
                 <a href="#products" class="category-card" data-filter="sofa">
-                    <img src="{{ url_for('static', filename='images/sofa.png') }}" alt="Sofas" loading="lazy">
+                    <img src="{{ url_for('static', filename='images/sofa.png') }}" alt="Sofas" loading="lazy" decoding="async">
                     <div class="category-content">
                         <h3>Sofa Sets</h3>
                         <span>View Collection &rarr;</span>
@@ -238,7 +241,7 @@
                 <div class="product-card" data-category="{{ product.category }}">
                     <a href="{{ url_for('product_detail', slug=product.slug) }}" style="text-decoration:none;color:inherit;">
                         <div class="product-image">
-                            <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}" loading="lazy">
+                            <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}" loading="lazy" decoding="async">
                         </div>
                         <div class="product-info">
                             <h3 class="product-name">{{ product.name }}</h3>
@@ -517,4 +520,5 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+
 

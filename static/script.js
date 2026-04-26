@@ -4,6 +4,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Background analytics tracking
+    fetch('/api/track-pageview', { method: 'POST' }).catch(() => {});
+
     // ---- Elements ----
     const navbar = document.getElementById('navbar');
     const navToggle = document.getElementById('navToggle');
